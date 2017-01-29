@@ -78,6 +78,7 @@ jQuery(function($){
 
 function champSelect(champName){
 	if (validateChampionSelected(champName)==false){
+		currentChampion = champName;
 		return;
 	}
 	socket.emit('select champ',{r:room,champ:champName});
@@ -93,7 +94,6 @@ function serverlessCS(champName){
 		default:
 			return;
 	}
-	currentChampion = champName;
 	champSelected = true;
 	playFile(selectSound);
 }
@@ -283,7 +283,7 @@ window.onbeforeunload = function (event) {
     socket.emit('leave room',room);
 };
 function updateState(data){
-	if (data.lockedin.length==0){
+	if (!data.begun){
 		return;
 	} 
 	console.log(data);
