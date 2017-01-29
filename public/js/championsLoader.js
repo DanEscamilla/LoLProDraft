@@ -34,4 +34,6 @@ window.onload = function(){
     $("#close-draft").click(function(){
         closeDraft();
     });
+    socket.emit('join',room);
+
 };

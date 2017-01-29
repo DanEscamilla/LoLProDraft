@@ -51,6 +51,10 @@ jQuery(function($){
 	socket.on('closed room',function(data){
 		window.location = "http://"+window.location.host+"/";
 	});
+	socket.on('user joined',function(users){
+		console.log("joined, users:"+users);
+		$("#user-count").text("Users:"+users);	
+	});
 
 });
 
@@ -137,7 +141,7 @@ function changeTurn(){
 function changeText(){
 	if (turn >= 0){
 		var currentEle = $("#"+teamOrder[turn]+"-pick-"+itemOrder[turn]+" span");
-		currentEle.text("");
+		currentEle.text((pickBanOrder[turn]=="ban")?"":currentChampion);
 		currentEle.removeClass("blinker");
 	}
 	if (turn < pickBanOrder.length){

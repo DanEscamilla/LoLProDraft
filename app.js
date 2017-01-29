@@ -48,7 +48,14 @@ io.sockets.on('connection',function(socket){
 	});
 
 	socket.on('join',function(room){
+		var users;
 		socket.join(room);
+		if (io.nsps['/'].adapter.rooms[room]){
+			users = io.nsps['/'].adapter.rooms[room].length;
+		} else {
+			users = 1;
+		}
+		io.sockets.in(room).emit('user joined',users);
 	});
 	socket.on('leave room',function(room){
 		var roomToRemove = checkRoom(room);
