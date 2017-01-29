@@ -27,7 +27,7 @@ var getLocation = function(href) {
 };
 
 jQuery(function($){
-
+	console.log(window.location);
 	room = window.location.href.match("(name=)(.*)")[2];
 	socket  = io.connect();
 
@@ -47,6 +47,9 @@ jQuery(function($){
 
 	socket.on('pause draft',function(data){
 		serverlessPI();
+	});
+	socket.on('closed room',function(data){
+		window.location = "http://"+window.location.host+"/";
 	});
 
 });
@@ -145,6 +148,9 @@ function changeText(){
 }
 function startDraft(){
 	socket.emit('start draft',room);
+}
+function closeDraft(){
+	socket.emit('close draft',room);
 }
 function serverlessSD(){
 	if (draftBegun == false){

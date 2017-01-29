@@ -20,7 +20,8 @@ $.ajax({
 
 
 
-$( document ).ready(function() {
+window.onload = function(){
+    $("#container").removeClass("hidden");
     $("#lock-in").click(function(){
         lockIn();
     });
@@ -30,4 +31,7 @@ $( document ).ready(function() {
     $("#pause-draft").click(function(){
         pauseInterval();
     });
-});
+    $("#close-draft").click(function(){
+        closeDraft();
+    });
+};

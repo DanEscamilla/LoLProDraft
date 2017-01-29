@@ -39,19 +39,26 @@ io.sockets.on('connection',function(socket){
 		socket.emit('change url',"/room/?name="+newroom);
 	});
 
+	socket.on('close draft',function(room){
+		io.sockets.in(room).emit('closed room',room);
+		for (var socketId in io.nsps['/'].adapter.rooms[room].sockets) {
+			var socket = io.sockets.connected[socketId];
+		    socket.leave(room);
+		}
+	});
+
 	socket.on('join',function(room){
 		socket.join(room);
 	});
 	socket.on('leave room',function(room){
 		var roomToRemove = checkRoom(room);
-		console.log("room to remove",roomToRemove);
 		if (roomToRemove){
 			removeRoom(roomToRemove);
 		}
 		socket.leave(room);
 	});
 	socket.on('start draft',function(data){
-		io.sockets.in(data).emit('start draft',data);
+		io.sockets.in(data).emit('start draft',"");
 	});
 	socket.on('select champ',function(data){
 		io.sockets.in(data.r).emit('select champ',data.champ);
@@ -75,13 +82,19 @@ setInterval(function(){
 }, 60 * 1000);   
 
 function checkRoom(roomName){
-	console.log("checking room",roomName);
-	if(io.nsps['/'].adapter.rooms[roomName].length<=1){
-   		return roomName;
+	if(io.nsps['/'].adapter.rooms[roomName]){
+		if(io.nsps['/'].adapter.rooms[roomName].length<=1){
+	   		return roomName;
+		} else {
+			return null;
+		}
+	} else {
+		return roomName;
 	}
-	return null;
 }
 function removeRoom(roomName){
 	var index = validRooms.indexOf(roomName);
-	validRooms.splice(index,1);
+	if (index != -1){
+		validRooms.splice(index,1);
+	}
 }
