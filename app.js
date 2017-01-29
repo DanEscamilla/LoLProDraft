@@ -16,7 +16,12 @@ app.use('/centered',directory(__dirname + '/public/centered'));
 
 app.get('/GGGGpass',function(req,res){
 	res.sendFile(__dirname+'/home.html');
-})
+});
+
+app.get('/',function(req,res){
+	res.sendFile(__dirname+'/test.html');
+});
+
 app.get('/room',function(req,res,next){
 	var queryData = url.parse(req.url, true).query;
 	if (validRooms.indexOf(queryData.name)!=-1){
