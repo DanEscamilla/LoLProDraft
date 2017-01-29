@@ -12,17 +12,21 @@ var usedChamps = [];
 var imageFile
 var turn = -1; 
 var champSelected = false;
-var currentChampion = "null";
+var currentChampion = "";
 var timerBlue, timerRed,intervalId,currentTimer;
 var countDownTimer = 30;
 var draftBegun = false;
 var paused = false;
 var socket;
 var room;
+var updatingState = false;
+var draftDone=false;
+
 var lockSound = new Audio('/sounds/lockinchampion.mp3');
 var doneSound = new Audio('/sounds/exitchampionselect.mp3');
 var selectSound = new Audio('/sounds/air_button_press_1.mp3');
 var timerSound = new Audio('/sounds/countdown10seconds.mp3');
+var beginSound = new Audio('/sounds/yourturn.mp3');
 
 var getLocation = function(href) {
     var l = document.createElement("a");
@@ -31,11 +35,14 @@ var getLocation = function(href) {
 };
 
 jQuery(function($){
+	timerInit();
 	console.log(window.location);
 	room = window.location.href.match("(name=)(.*)")[2];
 	socket  = io.connect();
 
-
+	socket.on('update state',function(data){
+		updateState(data);
+	});
 	socket.on('select champ',function(data){
 		serverlessCS(data);
 	});
@@ -60,6 +67,12 @@ jQuery(function($){
 	});
 	socket.on('restart draft',function(users){
 		restart();
+	});
+	socket.on('count down',function(time){
+		if (!draftDone && draftBegun){
+			countDownTimer = time;
+			currentTimer.text(time);
+		}
 	});
 });
 
@@ -95,8 +108,9 @@ function lockInBan(){
 		$("#"+teamOrder[turn]+"-ban-"+itemOrder[turn]).removeClass("blinker");
 }
 function lockIn(){
-	if (turn>=0 && turn <20)
-		socket.emit('lock in',room);
+	if (turn>=0 && turn <20 && currentChampion!=""){
+		socket.emit('lock in',{r:room,champ:currentChampion});
+	}
 }
 function serverlessLI(){
 	if (champSelected){
@@ -106,11 +120,13 @@ function serverlessLI(){
 		champSelected=false;
 		usedChamps.push(currentChampion);
 		invalidateChampionThumbnail(currentChampion);
+		currentChampion = "";
 	}
 	if (turn >= 20){
 		$("#lock-in").css("display","none");	
 		playFile(doneSound);
 		stopInterval();	
+		draftDone = true;
 	}
 }
 function timerChange(){
@@ -167,10 +183,10 @@ function closeDraft(){
 }
 function serverlessSD(){
 	if (draftBegun == false){
+		playFile(beginSound);
 		draftBegun = true;
 		$("#lock-in").css("display","block");
 		nextTurn();
-		timerInit();
 		startInterval();
 	} else {
 		paused = false;
@@ -183,20 +199,29 @@ function serverlessPI(){
 	paused = true;	
 }
 function stopInterval(){
-	clearInterval(intervalId);
+	// clearInterval(intervalId);
 	currentTimer.text("");
 }
 function startInterval(){
 	currentTimer.text("30");
-	intervalId = setInterval(function() {
-		if (paused == false){
-		    countDownTimer--;
-		    currentTimer.text(countDownTimer);
-		    if (countDownTimer<=10){
-		    	playFile(timerSound);
-		    }
-		}
-	}, 1000);
+	// intervalId = setInterval(function() {
+// 		if (paused == false){
+// 		    countDownTimer--;
+// 		    currentTimer.text(countDownTimer);
+// 		    if (countDownTimer<=10){
+// 		    	playFile(timerSound);
+// 		    }
+// 		}
+// 	}, 1000);
+}
+function countDown(){
+	if (paused == false){
+	    countDownTimer--;
+	    currentTimer.text(countDownTimer);
+	    if (countDownTimer<=10){
+	    	playFile(timerSound);
+	    }
+	}
 }
 function timerInit(){
 	timerBlue = $("#timer-blue");
@@ -240,9 +265,11 @@ window.onkeydown = function(e) {
 
 };
 
-function playFile(audioFile){	
-	audioFile.currentTime = 0;
-	audioFile.play();
+function playFile(audioFile){
+	if (updatingState == false){	
+		audioFile.currentTime = 0;
+		audioFile.play();
+	}
 }
 
 window.onkeyup = function(e) { 
@@ -255,3 +282,19 @@ window.onkeyup = function(e) {
 window.onbeforeunload = function (event) {
     socket.emit('leave room',room);
 };
+function updateState(data){
+	if (data.lockedin.length==0){
+		return;
+	} 
+	console.log(data);
+	updatingState = true;
+	turn = -1;
+	serverlessSD();
+	for (var i=0;i<data.lockedin.length;i++){
+		serverlessCS(data.lockedin[i]);
+		serverlessLI();
+	}
+	serverlessCS(data.current);
+	countDownTimer = data.counter;
+	updatingState = false;
+}

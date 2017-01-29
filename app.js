@@ -37,6 +37,7 @@ io.sockets.on('connection',function(socket){
 		var newroom = shortid.generate();
 		validRooms.push(newroom);
 		socket.emit('change url',"/room/?name="+newroom);
+		initGameState(newroom);
 	});
 
 	socket.on('close draft',function(room){
@@ -48,48 +49,81 @@ io.sockets.on('connection',function(socket){
 	});
 
 	socket.on('join',function(room){
-		var users;
 		socket.join(room);
-		if (io.nsps['/'].adapter.rooms[room]){
-			users = io.nsps['/'].adapter.rooms[room].length;
-		} else {
-			users = 1;
-		}
-		io.sockets.in(room).emit('user joined',users);
+		socket.emit('update state',gameStates[room]);
+		updateCount(room,socket);
 	});
 	socket.on('leave room',function(room){
 		var roomToRemove = checkRoom(room);
 		if (roomToRemove){
+			console.log(roomToRemove);
 			removeRoom(roomToRemove);
 		}
 		socket.leave(room);
+		updateCount(room,socket);
 	});
 	socket.on('start draft',function(data){
+		gameStates[data].begun = true;
+		gameStates[data].paused = false;
 		io.sockets.in(data).emit('start draft',"");
 	});
 	socket.on('select champ',function(data){
+		gameStates[data.r].current = data.champ;
 		io.sockets.in(data.r).emit('select champ',data.champ);
 	});
 	socket.on('pause draft',function(data){
+		gameStates[data].paused = true;
 		io.sockets.in(data).emit('pause draft',data);
 	});
 	socket.on('lock in',function(data){
-		io.sockets.in(data).emit('lock in',data);
+		gameStates[data.r].lockedin.push(data.champ);
+		gameStates[data.r].current = "";
+		gameStates[data.r].counter = 30;
+		io.sockets.in(data.r).emit('lock in',data.champ);
 	});
 	socket.on('restart draft',function(data){
+		initGameState(data);
 		io.sockets.in(data).emit('restart draft',data);
 	});
 });
 
+function initGameState(room){
+	gameStates[room] = {lockedin:[],current:"",paused:true,counter:30,begun:false};
+
+}
 setInterval(function(){
-	var newValidRooms = []
-  	for (var i=0;i<validRooms.length;i++){
-  		if(io.nsps['/'].adapter.rooms[validRooms[i]]){
-  			newValidRooms.push(validRooms[i]);
-  		}
-  	}
-  	validRooms = newValidRooms;
-}, 60 * 1000);   
+	for (var key in gameStates){
+		if (gameStates[key].paused == false){
+	    	gameStates[key].counter--;
+	    	io.sockets.in(key).emit('count down',gameStates[key].counter);
+		}
+		// if (gameStates[key].begun ){
+		// 	gameStates[key].begun = true;
+		// 	gameStates[key].paused = false;
+		// 	io.sockets.in(key).emit('start draft',"");
+		// }
+	}
+
+}, 1000);
+
+function updateCount(room){
+	var users;
+	if (io.nsps['/'].adapter.rooms[room]){
+		users = io.nsps['/'].adapter.rooms[room].length;
+	} else {
+		users = 1;
+	}
+	io.sockets.in(room).emit('user joined',users);
+}
+// setInterval(function(){
+// 	var newValidRooms = []
+//   	for (var i=0;i<validRooms.length;i++){
+//   		if(io.nsps['/'].adapter.rooms[validRooms[i]]){
+//   			newValidRooms.push(validRooms[i]);
+//   		}
+//   	}
+//   	validRooms = newValidRooms;
+// }, 60 * 1000);   
 
 function checkRoom(roomName){
 	if(io.nsps['/'].adapter.rooms[roomName]){
@@ -103,6 +137,7 @@ function checkRoom(roomName){
 	}
 }
 function removeRoom(roomName){
+	delete gameStates[roomName];	
 	var index = validRooms.indexOf(roomName);
 	if (index != -1){
 		validRooms.splice(index,1);
