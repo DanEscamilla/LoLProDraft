@@ -44,6 +44,7 @@ io.sockets.on('connection',function(socket){
 	});
 	socket.on('leave room',function(room){
 		var roomToRemove = checkRoom(room);
+		console.log("room to remove",roomToRemove);
 		if (roomToRemove){
 			removeRoom(roomToRemove);
 		}
@@ -71,9 +72,10 @@ setInterval(function(){
   		}
   	}
   	validRooms = newValidRooms;
-}, 60*60 * 1000);   
+}, 60 * 1000);   
 
 function checkRoom(roomName){
+	console.log("checking room",roomName);
 	if(io.nsps['/'].adapter.rooms[roomName].length<=1){
    		return roomName;
 	}
