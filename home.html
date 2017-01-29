@@ -1,0 +1,27 @@
+<html>
+
+<head>
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript">
+		jQuery(function($){
+			socket  = io.connect();
+			$("#create-room").click(function(){
+                socket.emit('create room');
+            });
+
+            socket.on('change url',function(data){
+				window.location = data;
+			});
+			
+		});
+	</script>
+	<link rel="stylesheet" type="text/css" href="/css/home.css"></link>
+	<title>Drafting Site</title>
+</head>
+<body>
+	<div class="container">
+		<button id="create-room">Create Room</button>
+	</div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+html, body { height: 100%; width: 100%; margin: 0; }
+
+.hbar{
+	width:100%;
+}
+.hbar div{
+	float:left;
+}
+.vbar{
+	height:100%;
+}
+#top-hbar{
+	border:1px solid black;
+	height:5%;
+}
+#center-hbar{
+	height:75%;
+}
+#bottom-hbar{
+	border:1px solid black;
+	height:20%;
+}
+#blue-side{
+	float:left;
+	background-color: blue;
+	width:20%;
+}
+#red-side{
+	background-color: red;	
+	width:20%;
+}
+.pick{
+	float:left;
+	background-color:black;
+	border-radius: 3px;
+	height: 16%;
+	width:90%;
+	margin-left:5%;
+	margin-bottom:6% ;
+}
+#blue-pick-1{
+	margin-top:6%;
+}
+#red-pick-1{
+	margin-top:6%;
+}
+#champions{
+	overflow-y:scroll; 
+	padding-left:.5em;
+	margin-right:-.5em;
+	width:60%;
+}
+.champion{
+	width:5em;
+	height:5em;
+	margin-bottom: .5em;
+	margin-right:.5em;
+	background-color:red;
+}
+#champ1{
+	background-image: url('../thumbnails/Aatrox_Square_0.png');;
+}
