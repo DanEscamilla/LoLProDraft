@@ -72,6 +72,9 @@ jQuery(function($){
 		if (!draftDone && draftBegun){
 			countDownTimer = time;
 			currentTimer.text(time);
+			if (countDownTimer<=10){
+				playFile(timerSound);
+			}
 		}
 	});
 });
