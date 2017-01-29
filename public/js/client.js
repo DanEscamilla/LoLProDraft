@@ -78,9 +78,9 @@ jQuery(function($){
 
 function champSelect(champName){
 	if (validateChampionSelected(champName)==false){
-		currentChampion = champName;
 		return;
 	}
+	currentChampion = champName;
 	socket.emit('select champ',{r:room,champ:champName});
 }
 function serverlessCS(champName){
@@ -108,9 +108,9 @@ function lockInBan(){
 		$("#"+teamOrder[turn]+"-ban-"+itemOrder[turn]).removeClass("blinker");
 }
 function lockIn(){
-	if (turn>=0 && turn <20 && currentChampion!=""){
+	if (turn>=0 && !draftDone && currentChampion != ""){
 		socket.emit('lock in',{r:room,champ:currentChampion});
-	}
+	} 
 }
 function serverlessLI(){
 	if (champSelected){
@@ -295,6 +295,7 @@ function updateState(data){
 		serverlessLI();
 	}
 	serverlessCS(data.current);
+	currentChampion = data.current;
 	countDownTimer = data.counter;
 	updatingState = false;
 }
