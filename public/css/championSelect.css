@@ -1,6 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400');
 
 #preload-01 { background: url(../layout_graphics/main-background-red.jpg) no-repeat -9999px -9999px; }
+#preload-02 { background: url(../layout_graphics/lock-in.png) no-repeat -9999px -9999px; }
+#preload-03 { background: url(../layout_graphics/lock-in-click.png) no-repeat -9999px -9999px; }
+#preload-04 { background: url(../layout_graphics/lock-in-hover.png) no-repeat -9999px -9999px; }
+#preload-05 { background: url(../layout_graphics/lock-in-red.png) no-repeat -9999px -9999px; }
+#preload-06 { background: url(../layout_graphics/lock-in-click-red.png) no-repeat -9999px -9999px; }
+#preload-07 { background: url(../layout_graphics/lock-in-hover-red.png) no-repeat -9999px -9999px; }
 
 html, body ,#container{ height: 100%; width: 100%;margin: 0; font-size:.7vw;	font-family: 'Roboto Condensed', sans-serif;font-weight: 300;background-color:black;}
 
