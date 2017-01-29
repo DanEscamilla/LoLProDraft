@@ -19,7 +19,6 @@ $.ajax({
 
 
 
-
 window.onload = function(){
     $("#container").removeClass("hidden");
     $("#lock-in").click(function(){
@@ -33,6 +32,9 @@ window.onload = function(){
     });
     $("#close-draft").click(function(){
         closeDraft();
+    });
+    $("#restart-draft").click(function(){
+        restartDraft();
     });
     socket.emit('join',room);
 

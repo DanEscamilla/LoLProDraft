@@ -19,6 +19,10 @@ var draftBegun = false;
 var paused = false;
 var socket;
 var room;
+var lockSound = new Audio('/sounds/lockinchampion.mp3');
+var doneSound = new Audio('/sounds/exitchampionselect.mp3');
+var selectSound = new Audio('/sounds/air_button_press_1.mp3');
+var timerSound = new Audio('/sounds/countdown10seconds.mp3');
 
 var getLocation = function(href) {
     var l = document.createElement("a");
@@ -31,7 +35,6 @@ jQuery(function($){
 	room = window.location.href.match("(name=)(.*)")[2];
 	socket  = io.connect();
 
-	socket.emit('join',room);
 
 	socket.on('select champ',function(data){
 		serverlessCS(data);
@@ -55,7 +58,9 @@ jQuery(function($){
 		console.log("joined, users:"+users);
 		$("#user-count").text("Users:"+users);	
 	});
-
+	socket.on('restart draft',function(users){
+		restart();
+	});
 });
 
 function champSelect(champName){
@@ -77,6 +82,7 @@ function serverlessCS(champName){
 	}
 	currentChampion = champName;
 	champSelected = true;
+	playFile(selectSound);
 }
 function selectPick(champName){
 	$("#"+teamOrder[turn]+"-pick-"+itemOrder[turn]).css("background-image","url(/centered/" +champName+ "_Splash_Centered_0.jpg)");
@@ -89,10 +95,12 @@ function lockInBan(){
 		$("#"+teamOrder[turn]+"-ban-"+itemOrder[turn]).removeClass("blinker");
 }
 function lockIn(){
-	socket.emit('lock in',room);
+	if (turn>=0 && turn <20)
+		socket.emit('lock in',room);
 }
 function serverlessLI(){
 	if (champSelected){
+		playFile(lockSound);
 		lockInBan();
 		nextTurn();
 		champSelected=false;
@@ -101,6 +109,7 @@ function serverlessLI(){
 	}
 	if (turn >= 20){
 		$("#lock-in").css("display","none");	
+		playFile(doneSound);
 		stopInterval();	
 	}
 }
@@ -173,9 +182,6 @@ function pauseInterval(){
 function serverlessPI(){
 	paused = true;	
 }
-function resumeInterval(){
-
-}
 function stopInterval(){
 	clearInterval(intervalId);
 	currentTimer.text("");
@@ -186,6 +192,9 @@ function startInterval(){
 		if (paused == false){
 		    countDownTimer--;
 		    currentTimer.text(countDownTimer);
+		    if (countDownTimer<=10){
+		    	playFile(timerSound);
+		    }
 		}
 	}, 1000);
 }
@@ -193,6 +202,30 @@ function timerInit(){
 	timerBlue = $("#timer-blue");
 	timerRed = $("#timer-red");
 	currentTimer = timerBlue;
+}
+function restartDraft(){
+	socket.emit('restart draft',room);
+}
+function restart(){
+	for (var i=1;i<=5;i++){
+		$("#red-pick-"+i).css("background-image","url(layout_graphics/pick-background-cropped-red.jpg)");
+		$("#red-pick-"+i+" span").text("");
+		$("#blue-pick-"+i).css("background-image","url(layout_graphics/pick-background-cropped.jpg)");
+		$("#blue-pick-"+i+" span").text("");
+		$("#red-ban-"+i).css("background-image","");
+		$("#blue-ban-"+i).css("background-image","");
+	}
+	$("#container").removeClass("red-turn");
+	$("#container").addClass("blue-turn");
+	stopInterval();
+	currentTimer.text("");
+	$("#lock-in").css("display","none");
+	draftBegun = false;
+	turn = -1;
+	for (var i=0;i<usedChamps.length;i++){
+		$("#"+usedChamps[i]).removeClass("greyout");
+	}
+	usedChamps = [];
 }
 	
 var fired = false;
@@ -206,6 +239,11 @@ window.onkeydown = function(e) {
     return !(e.keyCode == 32);
 
 };
+
+function playFile(audioFile){	
+	audioFile.currentTime = 0;
+	audioFile.play();
+}
 
 window.onkeyup = function(e) { 
     if(event.keyCode == 32) {

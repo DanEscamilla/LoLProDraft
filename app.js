@@ -76,6 +76,9 @@ io.sockets.on('connection',function(socket){
 	socket.on('lock in',function(data){
 		io.sockets.in(data).emit('lock in',data);
 	});
+	socket.on('restart draft',function(data){
+		io.sockets.in(data).emit('restart draft',data);
+	});
 });
 
 setInterval(function(){
