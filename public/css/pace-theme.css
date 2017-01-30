@@ -248,8 +248,6 @@ input {
 ::-webkit-input-placeholder {
   color:rgba(185,246,242,.5);
   text-shadow: 0 0 .125em transparent;
-  -webkit-transition: all .25s;
-  transition: all .25s;
 }
 
 .red-turn ::-webkit-input-placeholder {
