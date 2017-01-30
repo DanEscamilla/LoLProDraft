@@ -300,5 +300,6 @@ function updateState(data){
 	serverlessCS(data.current);
 	currentChampion = data.current;
 	countDownTimer = data.counter;
+	currentTimer.text(data.counter);
 	updatingState = false;
 }

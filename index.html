@@ -4,6 +4,7 @@
 	<script src="/js/jquery-latest.min.js"></script>
 	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
 	<script type="text/javascript" src="/js/pace.js"></script>
+	<script type="text/javascript" src="/js/filter.js"></script>
 	<script src="/js/championsLoader.js"></script>
 	<script src="/js/client.js"></script>
 	<link rel="stylesheet" href="../css/font-awesome-4.7.0/css/font-awesome.min.css"></link>
@@ -18,6 +19,7 @@
 			<i id="pause-draft" class="fa fa-pause" aria-hidden="true"></i>
 			<i id="restart-draft" class="fa fa-repeat" aria-hidden="true"></i>
 			<i id="close-draft" class="fa fa-times" aria-hidden="true"></i>
+			<input id="filter" type="text" placeholder="Champion name" />
 			<span id="user-count">Users:1<span>
 <!-- 			<i class="fa fa-stop" aria-hidden="true"></i>-->
 		</div>
@@ -42,140 +44,140 @@
 			</div>
 			<div id="champions" class="vbar">
 				<div id="championsInner" class="vbar">
-					<div id='Aatrox' style='background-image:url(/thumbnails/Aatrox_Square_0.png)'></div>
-					 <div id='Ahri' style='background-image:url(/thumbnails/Ahri_Square_0.png)'></div>
-					 <div id='Akali' style='background-image:url(/thumbnails/Akali_Square_0.png)'></div>
-					 <div id='Alistar' style='background-image:url(/thumbnails/Alistar_Square_0.png)'></div>
-					 <div id='Amumu' style='background-image:url(/thumbnails/Amumu_Square_0.png)'></div>
-					 <div id='Anivia' style='background-image:url(/thumbnails/Anivia_Square_0.png)'></div>
-					 <div id='Annie' style='background-image:url(/thumbnails/Annie_Square_0.png)'></div>
-					 <div id='Ashe' style='background-image:url(/thumbnails/Ashe_Square_0.png)'></div>
-					 <div id='AurelionSol' style='background-image:url(/thumbnails/AurelionSol_Square_0.png)'></div>
-					 <div id='Azir' style='background-image:url(/thumbnails/Azir_Square_0.png)'></div>
-					 <div id='Bard' style='background-image:url(/thumbnails/Bard_Square_0.png)'></div>
-					 <div id='Blitzcrank' style='background-image:url(/thumbnails/Blitzcrank_Square_0.png)'></div>
-					 <div id='Brand' style='background-image:url(/thumbnails/Brand_Square_0.png)'></div>
-					 <div id='Braum' style='background-image:url(/thumbnails/Braum_Square_0.png)'></div>
-					 <div id='Caitlyn' style='background-image:url(/thumbnails/Caitlyn_Square_0.png)'></div>
-					 <div id='Camille' style='background-image:url(/thumbnails/Camille_Square_0.png)'></div>
-					 <div id='Cassiopeia' style='background-image:url(/thumbnails/Cassiopeia_Square_0.png)'></div>
-					 <div id='Chogath' style='background-image:url(/thumbnails/Chogath_Square_0.png)'></div>
-					 <div id='Corki' style='background-image:url(/thumbnails/Corki_Square_0.png)'></div>
-					 <div id='Darius' style='background-image:url(/thumbnails/Darius_Square_0.png)'></div>
-					 <div id='Diana' style='background-image:url(/thumbnails/Diana_Square_0.png)'></div>
-					 <div id='Draven' style='background-image:url(/thumbnails/Draven_Square_0.png)'></div>
-					 <div id='DrMundo' style='background-image:url(/thumbnails/DrMundo_Square_0.png)'></div>
-					 <div id='Ekko' style='background-image:url(/thumbnails/Ekko_Square_0.png)'></div>
-					 <div id='Elise' style='background-image:url(/thumbnails/Elise_Square_0.png)'></div>
-					 <div id='Evelynn' style='background-image:url(/thumbnails/Evelynn_Square_0.png)'></div>
-					 <div id='Ezreal' style='background-image:url(/thumbnails/Ezreal_Square_0.png)'></div>
-					 <div id='Fiddlesticks' style='background-image:url(/thumbnails/Fiddlesticks_Square_0.png)'></div>
-					 <div id='Fiora' style='background-image:url(/thumbnails/Fiora_Square_0.png)'></div>
-					 <div id='Fizz' style='background-image:url(/thumbnails/Fizz_Square_0.png)'></div>
-					 <div id='Galio' style='background-image:url(/thumbnails/Galio_Square_0.png)'></div>
-					 <div id='Gangplank' style='background-image:url(/thumbnails/Gangplank_Square_0.png)'></div>
-					 <div id='Garen' style='background-image:url(/thumbnails/Garen_Square_0.png)'></div>
-					 <div id='Gnar' style='background-image:url(/thumbnails/Gnar_Square_0.png)'></div>
-					 <div id='Gragas' style='background-image:url(/thumbnails/Gragas_Square_0.png)'></div>
-					 <div id='Graves' style='background-image:url(/thumbnails/Graves_Square_0.png)'></div>
-					 <div id='Hecarim' style='background-image:url(/thumbnails/Hecarim_Square_0.png)'></div>
-					 <div id='Heimerdinger' style='background-image:url(/thumbnails/Heimerdinger_Square_0.png)'></div>
-					 <div id='Illaoi' style='background-image:url(/thumbnails/Illaoi_Square_0.png)'></div>
-					 <div id='Irelia' style='background-image:url(/thumbnails/Irelia_Square_0.png)'></div>
-					 <div id='Ivern' style='background-image:url(/thumbnails/Ivern_Square_0.png)'></div>
-					 <div id='Janna' style='background-image:url(/thumbnails/Janna_Square_0.png)'></div>
-					 <div id='JarvanIV' style='background-image:url(/thumbnails/JarvanIV_Square_0.png)'></div>
-					 <div id='Jax' style='background-image:url(/thumbnails/Jax_Square_0.png)'></div>
-					 <div id='Jayce' style='background-image:url(/thumbnails/Jayce_Square_0.png)'></div>
-					 <div id='Jhin' style='background-image:url(/thumbnails/Jhin_Square_0.png)'></div>
-					 <div id='Jinx' style='background-image:url(/thumbnails/Jinx_Square_0.png)'></div>
-					 <div id='Kalista' style='background-image:url(/thumbnails/Kalista_Square_0.png)'></div>
-					 <div id='Karma' style='background-image:url(/thumbnails/Karma_Square_0.png)'></div>
-					 <div id='Karthus' style='background-image:url(/thumbnails/Karthus_Square_0.png)'></div>
-					 <div id='Kassadin' style='background-image:url(/thumbnails/Kassadin_Square_0.png)'></div>
-					 <div id='Katarina' style='background-image:url(/thumbnails/Katarina_Square_0.png)'></div>
-					 <div id='Kayle' style='background-image:url(/thumbnails/Kayle_Square_0.png)'></div>
-					 <div id='Kennen' style='background-image:url(/thumbnails/Kennen_Square_0.png)'></div>
-					 <div id='Khazix' style='background-image:url(/thumbnails/Khazix_Square_0.png)'></div>
-					 <div id='Kindred' style='background-image:url(/thumbnails/Kindred_Square_0.png)'></div>
-					 <div id='Kled' style='background-image:url(/thumbnails/Kled_Square_0.png)'></div>
-					 <div id='KogMaw' style='background-image:url(/thumbnails/KogMaw_Square_0.png)'></div>
-					 <div id='Leblanc' style='background-image:url(/thumbnails/Leblanc_Square_0.png)'></div>
-					 <div id='LeeSin' style='background-image:url(/thumbnails/LeeSin_Square_0.png)'></div>
-					 <div id='Leona' style='background-image:url(/thumbnails/Leona_Square_0.png)'></div>
-					 <div id='Lissandra' style='background-image:url(/thumbnails/Lissandra_Square_0.png)'></div>
-					 <div id='Lucian' style='background-image:url(/thumbnails/Lucian_Square_0.png)'></div>
-					 <div id='Lulu' style='background-image:url(/thumbnails/Lulu_Square_0.png)'></div>
-					 <div id='Lux' style='background-image:url(/thumbnails/Lux_Square_0.png)'></div>
-					 <div id='Malphite' style='background-image:url(/thumbnails/Malphite_Square_0.png)'></div>
-					 <div id='Malzahar' style='background-image:url(/thumbnails/Malzahar_Square_0.png)'></div>
-					 <div id='Maokai' style='background-image:url(/thumbnails/Maokai_Square_0.png)'></div>
-					 <div id='MasterYi' style='background-image:url(/thumbnails/MasterYi_Square_0.png)'></div>
-					 <div id='MissFortune' style='background-image:url(/thumbnails/MissFortune_Square_0.png)'></div>
-					 <div id='MonkeyKing' style='background-image:url(/thumbnails/MonkeyKing_Square_0.png)'></div>
-					 <div id='Mordekaiser' style='background-image:url(/thumbnails/Mordekaiser_Square_0.png)'></div>
-					 <div id='Morgana' style='background-image:url(/thumbnails/Morgana_Square_0.png)'></div>
-					 <div id='Nami' style='background-image:url(/thumbnails/Nami_Square_0.png)'></div>
-					 <div id='Nasus' style='background-image:url(/thumbnails/Nasus_Square_0.png)'></div>
-					 <div id='Nautilus' style='background-image:url(/thumbnails/Nautilus_Square_0.png)'></div>
-					 <div id='Nidalee' style='background-image:url(/thumbnails/Nidalee_Square_0.png)'></div>
-					 <div id='Nocturne' style='background-image:url(/thumbnails/Nocturne_Square_0.png)'></div>
-					 <div id='Nunu' style='background-image:url(/thumbnails/Nunu_Square_0.png)'></div>
-					 <div id='Olaf' style='background-image:url(/thumbnails/Olaf_Square_0.png)'></div>
-					 <div id='Orianna' style='background-image:url(/thumbnails/Orianna_Square_0.png)'></div>
-					 <div id='Pantheon' style='background-image:url(/thumbnails/Pantheon_Square_0.png)'></div>
-					 <div id='Poppy' style='background-image:url(/thumbnails/Poppy_Square_0.png)'></div>
-					 <div id='Quinn' style='background-image:url(/thumbnails/Quinn_Square_0.png)'></div>
-					 <div id='Rammus' style='background-image:url(/thumbnails/Rammus_Square_0.png)'></div>
-					 <div id='RekSai' style='background-image:url(/thumbnails/RekSai_Square_0.png)'></div>
-					 <div id='Renekton' style='background-image:url(/thumbnails/Renekton_Square_0.png)'></div>
-					 <div id='Rengar' style='background-image:url(/thumbnails/Rengar_Square_0.png)'></div>
-					 <div id='Riven' style='background-image:url(/thumbnails/Riven_Square_0.png)'></div>
-					 <div id='Rumble' style='background-image:url(/thumbnails/Rumble_Square_0.png)'></div>
-					 <div id='Ryze' style='background-image:url(/thumbnails/Ryze_Square_0.png)'></div>
-					 <div id='Sejuani' style='background-image:url(/thumbnails/Sejuani_Square_0.png)'></div>
-					 <div id='Shaco' style='background-image:url(/thumbnails/Shaco_Square_0.png)'></div>
-					 <div id='Shen' style='background-image:url(/thumbnails/Shen_Square_0.png)'></div>
-					 <div id='Shyvana' style='background-image:url(/thumbnails/Shyvana_Square_0.png)'></div>
-					 <div id='Singed' style='background-image:url(/thumbnails/Singed_Square_0.png)'></div>
-					 <div id='Sion' style='background-image:url(/thumbnails/Sion_Square_0.png)'></div>
-					 <div id='Sivir' style='background-image:url(/thumbnails/Sivir_Square_0.png)'></div>
-					 <div id='Skarner' style='background-image:url(/thumbnails/Skarner_Square_0.png)'></div>
-					 <div id='Sona' style='background-image:url(/thumbnails/Sona_Square_0.png)'></div>
-					 <div id='Soraka' style='background-image:url(/thumbnails/Soraka_Square_0.png)'></div>
-					 <div id='Swain' style='background-image:url(/thumbnails/Swain_Square_0.png)'></div>
-					 <div id='Syndra' style='background-image:url(/thumbnails/Syndra_Square_0.png)'></div>
-					 <div id='TahmKench' style='background-image:url(/thumbnails/TahmKench_Square_0.png)'></div>
-					 <div id='Taliyah' style='background-image:url(/thumbnails/Taliyah_Square_0.png)'></div>
-					 <div id='Talon' style='background-image:url(/thumbnails/Talon_Square_0.png)'></div>
-					 <div id='Taric' style='background-image:url(/thumbnails/Taric_Square_0.png)'></div>
-					 <div id='Teemo' style='background-image:url(/thumbnails/Teemo_Square_0.png)'></div>
-					 <div id='Thresh' style='background-image:url(/thumbnails/Thresh_Square_0.png)'></div>
-					 <div id='Tristana' style='background-image:url(/thumbnails/Tristana_Square_0.png)'></div>
-					 <div id='Trundle' style='background-image:url(/thumbnails/Trundle_Square_0.png)'></div>
-					 <div id='Tryndamere' style='background-image:url(/thumbnails/Tryndamere_Square_0.png)'></div>
-					 <div id='TwistedFate' style='background-image:url(/thumbnails/TwistedFate_Square_0.png)'></div>
-					 <div id='Twitch' style='background-image:url(/thumbnails/Twitch_Square_0.png)'></div>
-					 <div id='Udyr' style='background-image:url(/thumbnails/Udyr_Square_0.png)'></div>
-					 <div id='Urgot' style='background-image:url(/thumbnails/Urgot_Square_0.png)'></div>
-					 <div id='Varus' style='background-image:url(/thumbnails/Varus_Square_0.png)'></div>
-					 <div id='Vayne' style='background-image:url(/thumbnails/Vayne_Square_0.png)'></div>
-					 <div id='Veigar' style='background-image:url(/thumbnails/Veigar_Square_0.png)'></div>
-					 <div id='VelKoz' style='background-image:url(/thumbnails/VelKoz_Square_0.png)'></div>
-					 <div id='Vi' style='background-image:url(/thumbnails/Vi_Square_0.png)'></div>
-					 <div id='Viktor' style='background-image:url(/thumbnails/Viktor_Square_0.png)'></div>
-					 <div id='Vladimir' style='background-image:url(/thumbnails/Vladimir_Square_0.png)'></div>
-					 <div id='Volibear' style='background-image:url(/thumbnails/Volibear_Square_0.png)'></div>
-					 <div id='Warwick' style='background-image:url(/thumbnails/Warwick_Square_0.png)'></div>
-					 <div id='Xerath' style='background-image:url(/thumbnails/Xerath_Square_0.png)'></div>
-					 <div id='XinZhao' style='background-image:url(/thumbnails/XinZhao_Square_0.png)'></div>
-					 <div id='Yasuo' style='background-image:url(/thumbnails/Yasuo_Square_0.png)'></div>
-					 <div id='Yorick' style='background-image:url(/thumbnails/Yorick_Square_0.png)'></div>
-					 <div id='Zac' style='background-image:url(/thumbnails/Zac_Square_0.png)'></div>
-					 <div id='Zed' style='background-image:url(/thumbnails/Zed_Square_0.png)'></div>
-					 <div id='Ziggs' style='background-image:url(/thumbnails/Ziggs_Square_0.png)'></div>
-					 <div id='Zilean' style='background-image:url(/thumbnails/Zilean_Square_0.png)'></div>
-					 <div id='Zyra' style='background-image:url(/thumbnails/Zyra_Square_0.png)'></div>
+					<div id='Aatrox' class= "champion" style='background-image:url(/thumbnails/Aatrox_Square_0.png)'></div>
+					 <div id='Ahri' class= "champion" style='background-image:url(/thumbnails/Ahri_Square_0.png)'></div>
+					 <div id='Akali' class= "champion" style='background-image:url(/thumbnails/Akali_Square_0.png)'></div>
+					 <div id='Alistar' class= "champion" style='background-image:url(/thumbnails/Alistar_Square_0.png)'></div>
+					 <div id='Amumu' class= "champion" style='background-image:url(/thumbnails/Amumu_Square_0.png)'></div>
+					 <div id='Anivia' class= "champion" style='background-image:url(/thumbnails/Anivia_Square_0.png)'></div>
+					 <div id='Annie' class= "champion" style='background-image:url(/thumbnails/Annie_Square_0.png)'></div>
+					 <div id='Ashe' class= "champion" style='background-image:url(/thumbnails/Ashe_Square_0.png)'></div>
+					 <div id='AurelionSol' class= "champion" style='background-image:url(/thumbnails/AurelionSol_Square_0.png)'></div>
+					 <div id='Azir' class= "champion" style='background-image:url(/thumbnails/Azir_Square_0.png)'></div>
+					 <div id='Bard' class= "champion" style='background-image:url(/thumbnails/Bard_Square_0.png)'></div>
+					 <div id='Blitzcrank' class= "champion" style='background-image:url(/thumbnails/Blitzcrank_Square_0.png)'></div>
+					 <div id='Brand' class= "champion" style='background-image:url(/thumbnails/Brand_Square_0.png)'></div>
+					 <div id='Braum' class= "champion" style='background-image:url(/thumbnails/Braum_Square_0.png)'></div>
+					 <div id='Caitlyn' class= "champion" style='background-image:url(/thumbnails/Caitlyn_Square_0.png)'></div>
+					 <div id='Camille' class= "champion" style='background-image:url(/thumbnails/Camille_Square_0.png)'></div>
+					 <div id='Cassiopeia' class= "champion" style='background-image:url(/thumbnails/Cassiopeia_Square_0.png)'></div>
+					 <div id='Chogath' class= "champion" style='background-image:url(/thumbnails/Chogath_Square_0.png)'></div>
+					 <div id='Corki' class= "champion" style='background-image:url(/thumbnails/Corki_Square_0.png)'></div>
+					 <div id='Darius' class= "champion" style='background-image:url(/thumbnails/Darius_Square_0.png)'></div>
+					 <div id='Diana' class= "champion" style='background-image:url(/thumbnails/Diana_Square_0.png)'></div>
+					 <div id='Draven' class= "champion" style='background-image:url(/thumbnails/Draven_Square_0.png)'></div>
+					 <div id='DrMundo' class= "champion" style='background-image:url(/thumbnails/DrMundo_Square_0.png)'></div>
+					 <div id='Ekko' class= "champion" style='background-image:url(/thumbnails/Ekko_Square_0.png)'></div>
+					 <div id='Elise' class= "champion" style='background-image:url(/thumbnails/Elise_Square_0.png)'></div>
+					 <div id='Evelynn' class= "champion" style='background-image:url(/thumbnails/Evelynn_Square_0.png)'></div>
+					 <div id='Ezreal' class= "champion" style='background-image:url(/thumbnails/Ezreal_Square_0.png)'></div>
+					 <div id='Fiddlesticks' class= "champion" style='background-image:url(/thumbnails/Fiddlesticks_Square_0.png)'></div>
+					 <div id='Fiora' class= "champion" style='background-image:url(/thumbnails/Fiora_Square_0.png)'></div>
+					 <div id='Fizz' class= "champion" style='background-image:url(/thumbnails/Fizz_Square_0.png)'></div>
+					 <div id='Galio' class= "champion" style='background-image:url(/thumbnails/Galio_Square_0.png)'></div>
+					 <div id='Gangplank' class= "champion" style='background-image:url(/thumbnails/Gangplank_Square_0.png)'></div>
+					 <div id='Garen' class= "champion" style='background-image:url(/thumbnails/Garen_Square_0.png)'></div>
+					 <div id='Gnar' class= "champion" style='background-image:url(/thumbnails/Gnar_Square_0.png)'></div>
+					 <div id='Gragas' class= "champion" style='background-image:url(/thumbnails/Gragas_Square_0.png)'></div>
+					 <div id='Graves' class= "champion" style='background-image:url(/thumbnails/Graves_Square_0.png)'></div>
+					 <div id='Hecarim' class= "champion" style='background-image:url(/thumbnails/Hecarim_Square_0.png)'></div>
+					 <div id='Heimerdinger' class= "champion" style='background-image:url(/thumbnails/Heimerdinger_Square_0.png)'></div>
+					 <div id='Illaoi' class= "champion" style='background-image:url(/thumbnails/Illaoi_Square_0.png)'></div>
+					 <div id='Irelia' class= "champion" style='background-image:url(/thumbnails/Irelia_Square_0.png)'></div>
+					 <div id='Ivern' class= "champion" style='background-image:url(/thumbnails/Ivern_Square_0.png)'></div>
+					 <div id='Janna' class= "champion" style='background-image:url(/thumbnails/Janna_Square_0.png)'></div>
+					 <div id='JarvanIV' class= "champion" style='background-image:url(/thumbnails/JarvanIV_Square_0.png)'></div>
+					 <div id='Jax' class= "champion" style='background-image:url(/thumbnails/Jax_Square_0.png)'></div>
+					 <div id='Jayce' class= "champion" style='background-image:url(/thumbnails/Jayce_Square_0.png)'></div>
+					 <div id='Jhin' class= "champion" style='background-image:url(/thumbnails/Jhin_Square_0.png)'></div>
+					 <div id='Jinx' class= "champion" style='background-image:url(/thumbnails/Jinx_Square_0.png)'></div>
+					 <div id='Kalista' class= "champion" style='background-image:url(/thumbnails/Kalista_Square_0.png)'></div>
+					 <div id='Karma' class= "champion" style='background-image:url(/thumbnails/Karma_Square_0.png)'></div>
+					 <div id='Karthus' class= "champion" style='background-image:url(/thumbnails/Karthus_Square_0.png)'></div>
+					 <div id='Kassadin' class= "champion" style='background-image:url(/thumbnails/Kassadin_Square_0.png)'></div>
+					 <div id='Katarina' class= "champion" style='background-image:url(/thumbnails/Katarina_Square_0.png)'></div>
+					 <div id='Kayle' class= "champion" style='background-image:url(/thumbnails/Kayle_Square_0.png)'></div>
+					 <div id='Kennen' class= "champion" style='background-image:url(/thumbnails/Kennen_Square_0.png)'></div>
+					 <div id='Khazix' class= "champion" style='background-image:url(/thumbnails/Khazix_Square_0.png)'></div>
+					 <div id='Kindred' class= "champion" style='background-image:url(/thumbnails/Kindred_Square_0.png)'></div>
+					 <div id='Kled' class= "champion" style='background-image:url(/thumbnails/Kled_Square_0.png)'></div>
+					 <div id='KogMaw' class= "champion" style='background-image:url(/thumbnails/KogMaw_Square_0.png)'></div>
+					 <div id='Leblanc' class= "champion" style='background-image:url(/thumbnails/Leblanc_Square_0.png)'></div>
+					 <div id='LeeSin' class= "champion" style='background-image:url(/thumbnails/LeeSin_Square_0.png)'></div>
+					 <div id='Leona' class= "champion" style='background-image:url(/thumbnails/Leona_Square_0.png)'></div>
+					 <div id='Lissandra' class= "champion" style='background-image:url(/thumbnails/Lissandra_Square_0.png)'></div>
+					 <div id='Lucian' class= "champion" style='background-image:url(/thumbnails/Lucian_Square_0.png)'></div>
+					 <div id='Lulu' class= "champion" style='background-image:url(/thumbnails/Lulu_Square_0.png)'></div>
+					 <div id='Lux' class= "champion" style='background-image:url(/thumbnails/Lux_Square_0.png)'></div>
+					 <div id='Malphite' class= "champion" style='background-image:url(/thumbnails/Malphite_Square_0.png)'></div>
+					 <div id='Malzahar' class= "champion" style='background-image:url(/thumbnails/Malzahar_Square_0.png)'></div>
+					 <div id='Maokai' class= "champion" style='background-image:url(/thumbnails/Maokai_Square_0.png)'></div>
+					 <div id='MasterYi' class= "champion" style='background-image:url(/thumbnails/MasterYi_Square_0.png)'></div>
+					 <div id='MissFortune' class= "champion" style='background-image:url(/thumbnails/MissFortune_Square_0.png)'></div>
+					 <div id='MonkeyKing' class= "champion" style='background-image:url(/thumbnails/MonkeyKing_Square_0.png)'></div>
+					 <div id='Mordekaiser' class= "champion" style='background-image:url(/thumbnails/Mordekaiser_Square_0.png)'></div>
+					 <div id='Morgana' class= "champion" style='background-image:url(/thumbnails/Morgana_Square_0.png)'></div>
+					 <div id='Nami' class= "champion" style='background-image:url(/thumbnails/Nami_Square_0.png)'></div>
+					 <div id='Nasus' class= "champion" style='background-image:url(/thumbnails/Nasus_Square_0.png)'></div>
+					 <div id='Nautilus' class= "champion" style='background-image:url(/thumbnails/Nautilus_Square_0.png)'></div>
+					 <div id='Nidalee' class= "champion" style='background-image:url(/thumbnails/Nidalee_Square_0.png)'></div>
+					 <div id='Nocturne' class= "champion" style='background-image:url(/thumbnails/Nocturne_Square_0.png)'></div>
+					 <div id='Nunu' class= "champion" style='background-image:url(/thumbnails/Nunu_Square_0.png)'></div>
+					 <div id='Olaf' class= "champion" style='background-image:url(/thumbnails/Olaf_Square_0.png)'></div>
+					 <div id='Orianna' class= "champion" style='background-image:url(/thumbnails/Orianna_Square_0.png)'></div>
+					 <div id='Pantheon' class= "champion" style='background-image:url(/thumbnails/Pantheon_Square_0.png)'></div>
+					 <div id='Poppy' class= "champion" style='background-image:url(/thumbnails/Poppy_Square_0.png)'></div>
+					 <div id='Quinn' class= "champion" style='background-image:url(/thumbnails/Quinn_Square_0.png)'></div>
+					 <div id='Rammus' class= "champion" style='background-image:url(/thumbnails/Rammus_Square_0.png)'></div>
+					 <div id='RekSai' class= "champion" style='background-image:url(/thumbnails/RekSai_Square_0.png)'></div>
+					 <div id='Renekton' class= "champion" style='background-image:url(/thumbnails/Renekton_Square_0.png)'></div>
+					 <div id='Rengar' class= "champion" style='background-image:url(/thumbnails/Rengar_Square_0.png)'></div>
+					 <div id='Riven' class= "champion" style='background-image:url(/thumbnails/Riven_Square_0.png)'></div>
+					 <div id='Rumble' class= "champion" style='background-image:url(/thumbnails/Rumble_Square_0.png)'></div>
+					 <div id='Ryze' class= "champion" style='background-image:url(/thumbnails/Ryze_Square_0.png)'></div>
+					 <div id='Sejuani' class= "champion" style='background-image:url(/thumbnails/Sejuani_Square_0.png)'></div>
+					 <div id='Shaco' class= "champion" style='background-image:url(/thumbnails/Shaco_Square_0.png)'></div>
+					 <div id='Shen' class= "champion" style='background-image:url(/thumbnails/Shen_Square_0.png)'></div>
+					 <div id='Shyvana' class= "champion" style='background-image:url(/thumbnails/Shyvana_Square_0.png)'></div>
+					 <div id='Singed' class= "champion" style='background-image:url(/thumbnails/Singed_Square_0.png)'></div>
+					 <div id='Sion' class= "champion" style='background-image:url(/thumbnails/Sion_Square_0.png)'></div>
+					 <div id='Sivir' class= "champion" style='background-image:url(/thumbnails/Sivir_Square_0.png)'></div>
+					 <div id='Skarner' class= "champion" style='background-image:url(/thumbnails/Skarner_Square_0.png)'></div>
+					 <div id='Sona' class= "champion" style='background-image:url(/thumbnails/Sona_Square_0.png)'></div>
+					 <div id='Soraka' class= "champion" style='background-image:url(/thumbnails/Soraka_Square_0.png)'></div>
+					 <div id='Swain' class= "champion" style='background-image:url(/thumbnails/Swain_Square_0.png)'></div>
+					 <div id='Syndra' class= "champion" style='background-image:url(/thumbnails/Syndra_Square_0.png)'></div>
+					 <div id='TahmKench' class= "champion" style='background-image:url(/thumbnails/TahmKench_Square_0.png)'></div>
+					 <div id='Taliyah' class= "champion" style='background-image:url(/thumbnails/Taliyah_Square_0.png)'></div>
+					 <div id='Talon' class= "champion" style='background-image:url(/thumbnails/Talon_Square_0.png)'></div>
+					 <div id='Taric' class= "champion" style='background-image:url(/thumbnails/Taric_Square_0.png)'></div>
+					 <div id='Teemo' class= "champion" style='background-image:url(/thumbnails/Teemo_Square_0.png)'></div>
+					 <div id='Thresh' class= "champion" style='background-image:url(/thumbnails/Thresh_Square_0.png)'></div>
+					 <div id='Tristana' class= "champion" style='background-image:url(/thumbnails/Tristana_Square_0.png)'></div>
+					 <div id='Trundle' class= "champion" style='background-image:url(/thumbnails/Trundle_Square_0.png)'></div>
+					 <div id='Tryndamere' class= "champion" style='background-image:url(/thumbnails/Tryndamere_Square_0.png)'></div>
+					 <div id='TwistedFate' class= "champion" style='background-image:url(/thumbnails/TwistedFate_Square_0.png)'></div>
+					 <div id='Twitch' class= "champion" style='background-image:url(/thumbnails/Twitch_Square_0.png)'></div>
+					 <div id='Udyr' class= "champion" style='background-image:url(/thumbnails/Udyr_Square_0.png)'></div>
+					 <div id='Urgot' class= "champion" style='background-image:url(/thumbnails/Urgot_Square_0.png)'></div>
+					 <div id='Varus' class= "champion" style='background-image:url(/thumbnails/Varus_Square_0.png)'></div>
+					 <div id='Vayne' class= "champion" style='background-image:url(/thumbnails/Vayne_Square_0.png)'></div>
+					 <div id='Veigar' class= "champion" style='background-image:url(/thumbnails/Veigar_Square_0.png)'></div>
+					 <div id='VelKoz' class= "champion" style='background-image:url(/thumbnails/VelKoz_Square_0.png)'></div>
+					 <div id='Vi' class= "champion" style='background-image:url(/thumbnails/Vi_Square_0.png)'></div>
+					 <div id='Viktor' class= "champion" style='background-image:url(/thumbnails/Viktor_Square_0.png)'></div>
+					 <div id='Vladimir' class= "champion" style='background-image:url(/thumbnails/Vladimir_Square_0.png)'></div>
+					 <div id='Volibear' class= "champion" style='background-image:url(/thumbnails/Volibear_Square_0.png)'></div>
+					 <div id='Warwick' class= "champion" style='background-image:url(/thumbnails/Warwick_Square_0.png)'></div>
+					 <div id='Xerath' class= "champion" style='background-image:url(/thumbnails/Xerath_Square_0.png)'></div>
+					 <div id='XinZhao' class= "champion" style='background-image:url(/thumbnails/XinZhao_Square_0.png)'></div>
+					 <div id='Yasuo' class= "champion" style='background-image:url(/thumbnails/Yasuo_Square_0.png)'></div>
+					 <div id='Yorick' class= "champion" style='background-image:url(/thumbnails/Yorick_Square_0.png)'></div>
+					 <div id='Zac' class= "champion" style='background-image:url(/thumbnails/Zac_Square_0.png)'></div>
+					 <div id='Zed' class= "champion" style='background-image:url(/thumbnails/Zed_Square_0.png)'></div>
+					 <div id='Ziggs' class= "champion" style='background-image:url(/thumbnails/Ziggs_Square_0.png)'></div>
+					 <div id='Zilean' class= "champion" style='background-image:url(/thumbnails/Zilean_Square_0.png)'></div>
+					 <div id='Zyra' class= "champion" style='background-image:url(/thumbnails/Zyra_Square_0.png)'></div>
 					 <div id='championsPadding'></div>
 				</div>	
 				<div id="timer-container">
