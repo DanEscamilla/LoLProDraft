@@ -97,6 +97,7 @@ function serverlessCS(champName){
 		default:
 			return;
 	}
+	currentChampion = champName;
 	champSelected = true;
 	playFile(selectSound);
 }
