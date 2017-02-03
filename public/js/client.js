@@ -237,9 +237,9 @@ function restartDraft(){
 }
 function restart(){
 	for (var i=1;i<=5;i++){
-		$("#red-pick-"+i).css("background-image","url(layout_graphics/pick-background-cropped-red.jpg)");
+		$("#red-pick-"+i).css("background-image","url(../layout_graphics/pick-background-cropped-red.jpg)");
 		$("#red-pick-"+i+" span").text("");
-		$("#blue-pick-"+i).css("background-image","url(layout_graphics/pick-background-cropped.jpg)");
+		$("#blue-pick-"+i).css("background-image","url(../layout_graphics/pick-background-cropped.jpg)");
 		$("#blue-pick-"+i+" span").text("");
 		$("#red-ban-"+i).css("background-image","");
 		$("#blue-ban-"+i).css("background-image","");

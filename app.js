@@ -41,6 +41,9 @@ io.sockets.on('connection',function(socket){
 	});
 
 	socket.on('close draft',function(room){
+		if (validRoom.indexOf(room)==-1){
+			return;
+		}
 		io.sockets.in(room).emit('closed room',room);
 		for (var socketId in io.nsps['/'].adapter.rooms[room].sockets) {
 			var socket = io.sockets.connected[socketId];
@@ -49,11 +52,17 @@ io.sockets.on('connection',function(socket){
 	});
 
 	socket.on('join',function(room){
+		if (validRoom.indexOf(room)==-1){
+			return;
+		}
 		socket.join(room);
 		socket.emit('update state',gameStates[room]);
 		updateCount(room,socket);
 	});
 	socket.on('leave room',function(room){
+		if (validRoom.indexOf(room)==-1){
+			return;
+		}
 		var roomToRemove = checkRoom(room);
 		if (roomToRemove){
 			console.log(roomToRemove);
@@ -62,28 +71,43 @@ io.sockets.on('connection',function(socket){
 		socket.leave(room);
 		updateCount(room,socket);
 	});
-	socket.on('start draft',function(data){
-		gameStates[data].begun = true;
-		gameStates[data].paused = false;
-		io.sockets.in(data).emit('start draft',"");
+	socket.on('start draft',function(room){
+		if (validRoom.indexOf(room)==-1){
+			return;
+		}
+		gameStates[room].begun = true;
+		gameStates[room].paused = false;
+		io.sockets.in(room).emit('start draft',"");
 	});
 	socket.on('select champ',function(data){
+		if (validRoom.indexOf(data.r)==-1){
+			return;
+		}
 		gameStates[data.r].current = data.champ;
 		io.sockets.in(data.r).emit('select champ',data.champ);
 	});
 	socket.on('pause draft',function(data){
-		gameStates[data].paused = true;
-		io.sockets.in(data).emit('pause draft',data);
+		if (validRoom.indexOf(room)==-1){
+			return;
+		}
+		gameStates[room].paused = true;
+		io.sockets.in(room).emit('pause draft',room);
 	});
 	socket.on('lock in',function(data){
+		if (validRoom.indexOf(data.r)==-1){
+			return;
+		}
 		gameStates[data.r].lockedin.push(data.champ);
 		gameStates[data.r].current = "";
 		gameStates[data.r].counter = 30;
 		io.sockets.in(data.r).emit('lock in',data.champ);
 	});
-	socket.on('restart draft',function(data){
-		initGameState(data);
-		io.sockets.in(data).emit('restart draft',data);
+	socket.on('restart draft',function(room){
+		if (validRoom.indexOf(room)==-1){
+			return;
+		}
+		initGameState(room);
+		io.sockets.in(room).emit('restart draft',room);
 	});
 });
 
