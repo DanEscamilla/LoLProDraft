@@ -41,7 +41,7 @@ io.sockets.on('connection',function(socket){
 	});
 
 	socket.on('close draft',function(room){
-		if (validRoom.indexOf(room)==-1){
+		if (validRooms.indexOf(room)==-1){
 			return;
 		}
 		io.sockets.in(room).emit('closed room',room);
@@ -52,7 +52,7 @@ io.sockets.on('connection',function(socket){
 	});
 
 	socket.on('join',function(room){
-		if (validRoom.indexOf(room)==-1){
+		if (validRooms.indexOf(room)==-1){
 			return;
 		}
 		socket.join(room);
@@ -60,7 +60,7 @@ io.sockets.on('connection',function(socket){
 		updateCount(room,socket);
 	});
 	socket.on('leave room',function(room){
-		if (validRoom.indexOf(room)==-1){
+		if (validRooms.indexOf(room)==-1){
 			return;
 		}
 		var roomToRemove = checkRoom(room);
@@ -72,7 +72,7 @@ io.sockets.on('connection',function(socket){
 		updateCount(room,socket);
 	});
 	socket.on('start draft',function(room){
-		if (validRoom.indexOf(room)==-1){
+		if (validRooms.indexOf(room)==-1){
 			return;
 		}
 		gameStates[room].begun = true;
@@ -80,21 +80,21 @@ io.sockets.on('connection',function(socket){
 		io.sockets.in(room).emit('start draft',"");
 	});
 	socket.on('select champ',function(data){
-		if (validRoom.indexOf(data.r)==-1){
+		if (validRooms.indexOf(data.r)==-1){
 			return;
 		}
 		gameStates[data.r].current = data.champ;
 		io.sockets.in(data.r).emit('select champ',data.champ);
 	});
-	socket.on('pause draft',function(data){
-		if (validRoom.indexOf(room)==-1){
+	socket.on('pause draft',function(room){
+		if (validRooms.indexOf(room)==-1){
 			return;
 		}
 		gameStates[room].paused = true;
 		io.sockets.in(room).emit('pause draft',room);
 	});
 	socket.on('lock in',function(data){
-		if (validRoom.indexOf(data.r)==-1){
+		if (validRooms.indexOf(data.r)==-1){
 			return;
 		}
 		gameStates[data.r].lockedin.push(data.champ);
@@ -103,7 +103,7 @@ io.sockets.on('connection',function(socket){
 		io.sockets.in(data.r).emit('lock in',data.champ);
 	});
 	socket.on('restart draft',function(room){
-		if (validRoom.indexOf(room)==-1){
+		if (validRooms.indexOf(room)==-1){
 			return;
 		}
 		initGameState(room);
