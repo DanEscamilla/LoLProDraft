@@ -250,6 +250,7 @@ function restart(){
 	currentTimer.text("");
 	$("#lock-in").css("display","none");
 	draftBegun = false;
+	draftDone = false;
 	turn = -1;
 	for (var i=0;i<usedChamps.length;i++){
 		$("#"+usedChamps[i]).removeClass("greyout");
