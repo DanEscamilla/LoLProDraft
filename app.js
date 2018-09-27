@@ -14,7 +14,7 @@ var directory = require('serve-index');
 app.use('/thumbnails',directory(__dirname + '/public/thumbnails'));
 app.use('/centered',directory(__dirname + '/public/centered'));
 
-app.get('/GGGGpass',function(req,res){
+app.get('/',function(req,res){
 	res.sendFile(__dirname+'/home.html');
 });
 
@@ -147,7 +147,7 @@ function updateCount(room){
 //   		}
 //   	}
 //   	validRooms = newValidRooms;
-// }, 60 * 1000);   
+// }, 60 * 1000);
 
 function checkRoom(roomName){
 	if(io.nsps['/'].adapter.rooms[roomName]){
@@ -161,7 +161,7 @@ function checkRoom(roomName){
 	}
 }
 function removeRoom(roomName){
-	delete gameStates[roomName];	
+	delete gameStates[roomName];
 	var index = validRooms.indexOf(roomName);
 	if (index != -1){
 		validRooms.splice(index,1);
