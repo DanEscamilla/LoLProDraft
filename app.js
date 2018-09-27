@@ -7,19 +7,15 @@ var url = require('url');
 var shortid = require('shortid');
 var validRooms = [];
 var gameStates = [];
+var directory = require('serve-index');
 
 app.use('/', express.static(__dirname + '/public'));
 
-var directory = require('serve-index');
 app.use('/thumbnails',directory(__dirname + '/public/thumbnails'));
 app.use('/centered',directory(__dirname + '/public/centered'));
 
 app.get('/',function(req,res){
 	res.sendFile(__dirname+'/home.html');
-});
-
-app.get('/',function(req,res){
-	res.sendFile(__dirname+'/test.html');
 });
 
 app.get('/room',function(req,res,next){

@@ -1,13 +1,14 @@
 {
-	"name":"chat",
-	"vesion":"0.0.1",
-	"description":"Lol Competitive Drafting",
-	"dependencies":{
-		"socket.io":"1.7.2",
-		"express":"4.14.0"
-	},
-	"scripts": {
-    	"start": "node app.js"
-  	}
-
+  "name": "chat",
+  "vesion": "0.0.1",
+  "description": "Lol Competitive Drafting",
+  "dependencies": {
+    "express": "4.14.0",
+    "serve-index": "^1.9.1",
+    "shortid": "^2.2.13",
+    "socket.io": "1.7.2"
+  },
+  "scripts": {
+    "start": "node app.js"
+  }
 }
